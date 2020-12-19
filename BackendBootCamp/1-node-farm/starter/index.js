@@ -3,6 +3,8 @@ const http = require('http');
 const url = require('url');
 
 
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
+const dataObject = JSON.parse(data);
 
 //Creating an HTTP Server
 const server = http.createServer((req,res) => {
@@ -12,9 +14,22 @@ const server = http.createServer((req,res) => {
     }else if(pathName === '/product'){
         res.end('This is product')
     }else if(pathName === '/api'){
-        fs.readFile('./dev-data/data.json');
-        
-        res.end("API");
+        /**
+         * This is not Efficient since each time /api is called the server
+         * has to rerun this section of code, when we can do a version where
+         * its only ran once.
+         */
+
+         /**
+          * fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err,data) =>{
+          * const productData = JSON.parse(data);
+          * res.writeHead(200, {'Content-type': 'application/json'});
+          * res.end(data);
+          * });
+          */
+            res.writeHead(200, {'Content-type': 'application/json'});
+            res.end(data);
+
     }else{
         res.writeHead(404, {
             'Content-type': 'text/html',
