@@ -11,10 +11,6 @@ const server = http.createServer((req,res) => {
         res.end('This is overview');
     }else if(pathName === '/product'){
         res.end('This is product')
-    }else if(pathName === '/api'){
-        fs.readFile('./dev-data/data.json');
-        
-        res.end("API");
     }else{
         res.writeHead(404, {
             'Content-type': 'text/html',
